@@ -19,10 +19,11 @@ class AuthenticatedSessionController extends Controller
     {
         try {
             $request->authenticate();
-
+            $user = auth()->user();
+            $token = $user->createToken('crwdbsness')->plainTextToken;
             return response()->json([
                 'status' => 200,
-                'user' => Auth::user(),
+                'user' => $user,
                 'token' => $token, 
             ], 200);
         } catch (\Exception $e) {
